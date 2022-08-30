@@ -16,7 +16,7 @@ public class ExecutePython {
                 "import requests\n" +
                 "import base64\n" +
                 "def downloadXRayForNuemonia(patient_id):\n" +
-                "    api_url = \"http://localhost:8080/patient_detail/downloadXray\"\n" +
+                "    api_url = \"http://34.213.207.172:8080/patient_detail/downloadXray\"\n" +
                 "    todo = {\"patientId\": patient_id}\n" +
                 "    headers =  {\"Authorization\": \"" + token + "\"}\n" +
                 "    response = requests.post(api_url, json=todo, headers=headers)\n" +
