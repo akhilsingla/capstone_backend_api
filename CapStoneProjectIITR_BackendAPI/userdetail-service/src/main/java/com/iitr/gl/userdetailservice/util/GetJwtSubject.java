@@ -13,7 +13,7 @@ public class GetJwtSubject {
                 getBody().getSubject();
         String[] userDetail = subject.split(":::");
         if (isAdmin) {
-            if (userDetail[1].equals("true"))
+            if (userDetail[1].equals("true") && userDetail[0].equals(userId))
                 return true;
             else return false;
         } else {
