@@ -79,6 +79,7 @@ public class PythonScriptServiceImpl implements PythonScriptService {
             if (!pythonScriptIds.isEmpty())
                 pythonScriptMongoDBRepository.deleteAllUsingScriptId(pythonScriptIds);
 
+            pythonScriptMySqlRepository.deleteByUserId(userId);
             return HttpStatus.OK;
         }
 

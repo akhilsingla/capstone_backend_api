@@ -112,6 +112,7 @@ public class XRayServiceImpl implements XRayService {
             if (!tuberculosisXrayIds.isEmpty())
                 tuberculosisXRayMongoDBRepository.deleteAllUsingXrayId(tuberculosisXrayIds);
 
+            xRayDetailMySqlRepository.deleteByUserId(userId);
             return HttpStatus.OK;
         }
 
