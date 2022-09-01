@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface PneumoniaXRayMongoDBRepository extends MongoRepository<PneumoniaXRayDocument, String> {
-    PneumoniaXRayDocument findByxrayId(String xrayId);
+    PneumoniaXRayDocument findByXrayId(String xrayId);
 
     void deleteByXrayId(String xrayId);
 

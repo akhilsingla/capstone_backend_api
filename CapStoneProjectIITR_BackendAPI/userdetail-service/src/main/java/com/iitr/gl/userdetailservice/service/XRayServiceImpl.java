@@ -28,25 +28,25 @@ public class XRayServiceImpl implements XRayService {
     public DownloadFileDto downloadXRay(DownloadFileDto downloadFileDto) {
 
         XRayDetailEntity xRayDetailEntity = xRayDetailMySqlRepository.findByXrayIdAndUserId(downloadFileDto.getXrayId(), downloadFileDto.getUserId());
-        downloadFileDto = new DownloadFileDto();
+        DownloadFileDto responseDto = new DownloadFileDto();
         if (xRayDetailEntity != null) {
             if (xRayDetailEntity.getXrayType().equalsIgnoreCase("pneumonia")) {
-                PneumoniaXRayDocument pneumoniaXRayDocument = pneumoniaXRayMongoDBRepository.findByxrayId(downloadFileDto.getXrayId());
-                downloadFileDto.setFile(pneumoniaXRayDocument.getData());
-                downloadFileDto.setFilename(pneumoniaXRayDocument.getFilename());
-                downloadFileDto.setXrayId(pneumoniaXRayDocument.getXrayId());
+                PneumoniaXRayDocument pneumoniaXRayDocument = pneumoniaXRayMongoDBRepository.findByXrayId(downloadFileDto.getXrayId());
+                responseDto.setFile(pneumoniaXRayDocument.getData());
+                responseDto.setFilename(pneumoniaXRayDocument.getFilename());
+                responseDto.setXrayId(pneumoniaXRayDocument.getXrayId());
             } else if (xRayDetailEntity.getXrayType().equalsIgnoreCase("tuberculosis")) {
                 TuberculosisXRayDocument tuberculosisXRayDocument = tuberculosisXRayMongoDBRepository.findByxrayId(downloadFileDto.getXrayId());
-                downloadFileDto.setFile(tuberculosisXRayDocument.getData());
-                downloadFileDto.setFilename(tuberculosisXRayDocument.getFilename());
-                downloadFileDto.setXrayId(tuberculosisXRayDocument.getXrayId());
+                responseDto.setFile(tuberculosisXRayDocument.getData());
+                responseDto.setFilename(tuberculosisXRayDocument.getFilename());
+                responseDto.setXrayId(tuberculosisXRayDocument.getXrayId());
             }
 
-            return downloadFileDto;
+            return responseDto;
         } else {
-            downloadFileDto.setErrorMessage("For given userId, xrayId, no xray is present");
-            downloadFileDto.setFile(null);
-            return downloadFileDto;
+            responseDto.setErrorMessage("For given userId, xrayId, no xray is present");
+            responseDto.setFile(null);
+            return responseDto;
         }
     }
 
@@ -126,7 +126,7 @@ public class XRayServiceImpl implements XRayService {
 
         if (xRayDetailEntity != null) {
             if ((xRayDetailEntity.getXrayType().equalsIgnoreCase("pneumonia"))) {
-                PneumoniaXRayDocument document = pneumoniaXRayMongoDBRepository.findByxrayId(fileDto.getXrayId());
+                PneumoniaXRayDocument document = pneumoniaXRayMongoDBRepository.findByXrayId(fileDto.getXrayId());
                 document.setFilename(fileDto.getFileName());
                 document.setData(Base64Utils.decodeFromString(fileDto.getFileData()));
                 document.setHaspneumonia("Processing");
