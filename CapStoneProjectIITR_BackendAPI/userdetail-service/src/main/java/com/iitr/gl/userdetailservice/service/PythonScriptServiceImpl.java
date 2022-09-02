@@ -30,7 +30,7 @@ public class PythonScriptServiceImpl implements PythonScriptService {
     public void uploadPythonScript(UploadFileDto fileDto) {
         PythonScriptDocument pythonScriptDocument = new PythonScriptDocument();
         pythonScriptDocument.setFileName(fileDto.getFileName());
-        pythonScriptDocument.setScriptId(UUID.randomUUID().toString());
+        pythonScriptDocument.setScriptId(fileDto.getScriptId());
         pythonScriptDocument.setData(Base64Utils.decodeFromString(fileDto.getFileData()));
         pythonScriptMongoDBRepository.save(pythonScriptDocument);
 
