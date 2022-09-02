@@ -55,6 +55,7 @@ public class PythonScriptActions {
                                                      PythonScriptService pythonScriptService) {
         GenericDto dto = new GenericDto();
         dto.setScriptId(requestModel.getScriptId());
+        dto.setUserId(requestModel.getUserId());
         HttpStatus httpStatus = pythonScriptService.deletePythonScript(dto);
         if (HttpStatus.OK == httpStatus)
             return ResponseEntity.status(HttpStatus.OK).

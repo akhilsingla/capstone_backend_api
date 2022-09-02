@@ -2,6 +2,7 @@ package com.iitr.gl.userdetailservice.util;
 
 import com.iitr.gl.userdetailservice.shared.PythonScriptDto;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Base64Utils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class ExecutePython {
                 "import requests\n" +
                 "import base64\n" +
                 "def downloadXRayForNuemonia(patient_id):\n" +
-                "    api_url = \"http://34.213.207.172:8080/patient_detail/downloadXray\"\n" +
+                "    api_url = \"http://localhost:8080/patient_detail/downloadXray\"\n" +
                 "    todo = {\"patientId\": patient_id}\n" +
                 "    headers =  {\"Authorization\": \"" + token + "\"}\n" +
                 "    response = requests.post(api_url, json=todo, headers=headers)\n" +
@@ -28,7 +29,7 @@ public class ExecutePython {
             String filePath = tempPyhtonFile.getAbsolutePath();
             System.out.println("FilePath : " + filePath);
             FileWriter fileWriter = new FileWriter(filePath);
-            fileWriter.write(pythonScriptDto.getBody());
+            fileWriter.write(new String(Base64Utils.decodeFromString(pythonScriptDto.getBody())));
             fileWriter.close();
             return executePython(filePath);
         } catch (Exception e) {
