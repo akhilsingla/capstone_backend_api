@@ -80,7 +80,7 @@ public class PythonScriptActions {
     public ResponseEntity<ByteArrayResource> downloadPythonScript(GenericRequestModel genericRequestModel,
                                                                   PythonScriptService pythonScriptService) {
         DownloadFileDto downloadFileDto = new DownloadFileDto();
-        downloadFileDto.setXrayId(genericRequestModel.getXrayId());
+        downloadFileDto.setScriptId(genericRequestModel.getScriptId());
         downloadFileDto.setUserId(genericRequestModel.getUserId());
         DownloadFileDto file = pythonScriptService.downloadPythonScript(downloadFileDto);
         if (file.getFile() != null) {
@@ -97,7 +97,7 @@ public class PythonScriptActions {
     public ResponseEntity<String> viewPythonScript(GenericRequestModel genericRequestModel,
                                                    PythonScriptService pythonScriptService) {
         DownloadFileDto downloadFileDto = new DownloadFileDto();
-        downloadFileDto.setXrayId(genericRequestModel.getXrayId());
+        downloadFileDto.setScriptId(genericRequestModel.getScriptId());
         downloadFileDto.setUserId(genericRequestModel.getUserId());
         DownloadFileDto file = pythonScriptService.downloadPythonScript(downloadFileDto);
         if (file.getFile() != null) {
