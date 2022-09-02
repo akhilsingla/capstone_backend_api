@@ -8,6 +8,16 @@ public class GenericRequestModel {
 
     private String scriptId;
 
+    private String adminId;
+
+    public String getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(String adminId) {
+        this.adminId = adminId;
+    }
+
     public String getScriptId() {
         return scriptId;
     }

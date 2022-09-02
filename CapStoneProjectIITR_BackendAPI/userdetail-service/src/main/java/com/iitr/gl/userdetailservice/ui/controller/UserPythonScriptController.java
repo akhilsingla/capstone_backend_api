@@ -3,6 +3,7 @@ package com.iitr.gl.userdetailservice.ui.controller;
 import com.iitr.gl.userdetailservice.service.PythonScriptService;
 import com.iitr.gl.userdetailservice.shared.PythonScriptDto;
 import com.iitr.gl.userdetailservice.ui.model.GenericRequestModel;
+import com.iitr.gl.userdetailservice.ui.model.PythonScriptRequestModel;
 import com.iitr.gl.userdetailservice.ui.model.UploadPythonScriptRequestModel;
 import com.iitr.gl.userdetailservice.ui.model.UploadPythonScriptResponseModel;
 import com.iitr.gl.userdetailservice.util.ExecutePython;
@@ -79,10 +80,10 @@ public class UserPythonScriptController {
     }
 
     @PostMapping(value = "/runPy", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Object> runPythonScript(@RequestBody PythonScriptDto pythonScriptDto,
+    public List<Object> runPythonScript(@RequestBody PythonScriptRequestModel requestModel,
                                         @RequestHeader("Authorization") String token) {
-        getJwtSubject.verifyIfAuthorized(token, pythonScriptDto.getUserId(), environment, false);
-        return executePython.runPythonScript(pythonScriptDto);
+        getJwtSubject.verifyIfAuthorized(token, requestModel.getUserId(), environment, false);
+        return executePython.runPythonScript(requestModel);
 
     }
 }

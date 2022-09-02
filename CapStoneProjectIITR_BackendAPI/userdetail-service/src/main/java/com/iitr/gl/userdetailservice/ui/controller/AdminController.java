@@ -53,7 +53,7 @@ public class AdminController {
     @PostMapping("/upgradeUserToAdmin")
     public String upgradeUserToAdmin(@RequestBody GenericRequestModel requestModel, @RequestHeader("Authorization") String token)
             throws UnauthorizedException {
-        getJwtSubject.verifyIfAuthorized(token, requestModel.getUserId(), environment, true);
+        getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
         GenericDto dto = new GenericDto();
         dto.setUserId(requestModel.getUserId());
         HttpStatus status = adminService.upgradeUserToAdmin(dto);
@@ -64,17 +64,17 @@ public class AdminController {
     }
 
     @PostMapping("/listUsers")
-    public List<AdminDashboardDto> listUsers(@RequestBody GenericDto dto, @RequestHeader("Authorization") String token)
+    public List<AdminDashboardDto> listUsers(@RequestBody GenericRequestModel requestModel, @RequestHeader("Authorization") String token)
             throws UnauthorizedException {
-        getJwtSubject.verifyIfAuthorized(token, dto.getUserId(), environment, true);
+        getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
         return adminService.listUsers();
     }
 
     @PostMapping("/deleteUser")
-    ResponseEntity<String> deleteUser(@RequestBody GenericDto dto, @RequestHeader("Authorization") String token)
+    ResponseEntity<String> deleteUser(@RequestBody GenericRequestModel requestModel, @RequestHeader("Authorization") String token)
             throws UnauthorizedException {
-        getJwtSubject.verifyIfAuthorized(token, dto.getUserId(), environment, true);
-        HttpStatus httpStatus = adminService.deleteUser(dto.getUserId());
+        getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
+        HttpStatus httpStatus = adminService.deleteUser(requestModel.getUserId());
 
         if (HttpStatus.OK == httpStatus)
             return ResponseEntity.ok().body("Successfully deleted user");
@@ -90,77 +90,77 @@ public class AdminController {
     @PostMapping("/uploadPythonScript")
     public ResponseEntity<UploadPythonScriptResponseModel> uploadPythonScript(@RequestBody UploadPythonScriptRequestModel requestModel,
                                                                               @RequestHeader("Authorization") String token) {
-        getJwtSubject.verifyIfAuthorized(token, requestModel.getUserId(), environment, true);
+        getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
         return pythonScriptActions.uploadPythonScript(requestModel, pythonScriptService);
     }
 
     @PostMapping("/updatePythonScript")
     public ResponseEntity<String> updatePythonScript(@RequestBody UploadPythonScriptRequestModel requestModel,
                                                      @RequestHeader("Authorization") String token) {
-        getJwtSubject.verifyIfAuthorized(token, requestModel.getUserId(), environment, true);
+        getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
         return pythonScriptActions.updatePythonScript(requestModel, pythonScriptService);
     }
 
     @PostMapping("/deletePythonScript")
     public ResponseEntity<String> deletePythonScript(@RequestBody GenericRequestModel requestModel,
                                                      @RequestHeader("Authorization") String token) {
-        getJwtSubject.verifyIfAuthorized(token, requestModel.getUserId(), environment, true);
+        getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
         return pythonScriptActions.deletePythonScript(requestModel, pythonScriptService);
     }
 
     @PostMapping("/deleteAllPythonScript")
     public ResponseEntity<String> deleteAllPythonScript(@RequestBody GenericRequestModel requestModel,
                                                         @RequestHeader("Authorization") String token) {
-        getJwtSubject.verifyIfAuthorized(token, requestModel.getUserId(), environment, true);
+        getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
         return pythonScriptActions.deleteAllPythonScript(requestModel, pythonScriptService);
     }
 
     @PostMapping("/downloadPythonScript")
     public ResponseEntity<ByteArrayResource> downloadPythonScript(@RequestBody GenericRequestModel genericRequestModel,
                                                                   @RequestHeader("Authorization") String token) {
-        getJwtSubject.verifyIfAuthorized(token, genericRequestModel.getUserId(), environment, true);
+        getJwtSubject.verifyIfAuthorized(token, genericRequestModel.getAdminId(), environment, true);
         return pythonScriptActions.downloadPythonScript(genericRequestModel, pythonScriptService);
     }
 
     @PostMapping("/viewPythonScript")
     public ResponseEntity<String> viewPythonScript(@RequestBody GenericRequestModel genericRequestModel,
                                                    @RequestHeader("Authorization") String token) {
-        getJwtSubject.verifyIfAuthorized(token, genericRequestModel.getUserId(), environment, true);
+        getJwtSubject.verifyIfAuthorized(token, genericRequestModel.getAdminId(), environment, true);
         return pythonScriptActions.viewPythonScript(genericRequestModel, pythonScriptService);
     }
 
     @PostMapping("/downloadXray")
     public ResponseEntity<ByteArrayResource> downloadXray(@RequestBody GenericRequestModel genericRequestModel,
                                                           @RequestHeader("Authorization") String token) {
-        getJwtSubject.verifyIfAuthorized(token, genericRequestModel.getUserId(), environment, true);
+        getJwtSubject.verifyIfAuthorized(token, genericRequestModel.getAdminId(), environment, true);
         return xRayActions.downloadXray(genericRequestModel, XRayService);
     }
 
     @PostMapping("/viewXray")
     public ResponseEntity<String> viewXray(@RequestBody GenericRequestModel genericRequestModel,
                                            @RequestHeader("Authorization") String token) {
-        getJwtSubject.verifyIfAuthorized(token, genericRequestModel.getUserId(), environment, true);
+        getJwtSubject.verifyIfAuthorized(token, genericRequestModel.getAdminId(), environment, true);
         return xRayActions.viewXray(genericRequestModel, XRayService);
     }
 
     @PostMapping("/uploadXray")
     public ResponseEntity<UploadXRayFileResponseModel> uploadXray(@RequestBody UploadXRayFileRequestModel requestModel,
                                                                   @RequestHeader("Authorization") String token) {
-        getJwtSubject.verifyIfAuthorized(token, requestModel.getUserId(), environment, true);
+        getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
         return xRayActions.uploadXray(requestModel, XRayService);
     }
 
     @PostMapping("/deleteXray")
     public ResponseEntity<String> deleteXray(@RequestBody GenericRequestModel genericRequestModel,
                                              @RequestHeader("Authorization") String token) {
-        getJwtSubject.verifyIfAuthorized(token, genericRequestModel.getUserId(), environment, true);
+        getJwtSubject.verifyIfAuthorized(token, genericRequestModel.getAdminId(), environment, true);
         return xRayActions.deleteXray(genericRequestModel, XRayService);
     }
 
     @PostMapping("/deleteAllXray")
     public ResponseEntity<String> deleteAllXray(@RequestBody GenericRequestModel requestModel,
                                                 @RequestHeader("Authorization") String token) {
-        getJwtSubject.verifyIfAuthorized(token, requestModel.getUserId(), environment, true);
+        getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
         return xRayActions.deleteAllXray(requestModel, XRayService);
     }
 
@@ -168,14 +168,14 @@ public class AdminController {
     @PostMapping("/updateXray")
     public ResponseEntity<String> updateXray(@RequestBody UploadXRayFileRequestModel requestModel,
                                              @RequestHeader("Authorization") String token) {
-        getJwtSubject.verifyIfAuthorized(token, requestModel.getUserId(), environment, true);
+        getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
         return xRayActions.updateXray(requestModel, XRayService);
     }
 
     @PostMapping("/listUserFiles")
     public ResponseEntity<ListUserFilesResponseModel> listUserFiles(@RequestBody GenericRequestModel requestModel,
                                                                     @RequestHeader("Authorization") String token) {
-        getJwtSubject.verifyIfAuthorized(token, requestModel.getUserId(), environment, true);
+        getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
         ListUserFilesResponseModel listUserFilesResponseModel = XRayService.listUserFiles(requestModel.getUserId());
         if (listUserFilesResponseModel == null)
             listUserFilesResponseModel = new ListUserFilesResponseModel();
@@ -184,10 +184,10 @@ public class AdminController {
     }
 
     @PostMapping(value = "/runPy", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Object> runPythonScript(@RequestBody PythonScriptDto pythonScriptDto,
+    public List<Object> runPythonScript(@RequestBody PythonScriptRequestModel requestModel,
                                         @RequestHeader("Authorization") String token) {
-        getJwtSubject.verifyIfAuthorized(token, pythonScriptDto.getUserId(), environment, true);
-        return executePython.runPythonScript(pythonScriptDto);
+        getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
+        return executePython.runPythonScript(requestModel);
 
     }
 }

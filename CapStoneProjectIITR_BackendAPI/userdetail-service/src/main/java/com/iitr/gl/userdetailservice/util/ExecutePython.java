@@ -1,6 +1,7 @@
 package com.iitr.gl.userdetailservice.util;
 
 import com.iitr.gl.userdetailservice.shared.PythonScriptDto;
+import com.iitr.gl.userdetailservice.ui.model.PythonScriptRequestModel;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Component
 public class ExecutePython {
 
-    public List<Object> runPythonScript(PythonScriptDto pythonScriptDto) {
+    public List<Object> runPythonScript(PythonScriptRequestModel requestModel) {
        /* String pythonCode = "#!/usr/bin/python\n" +
                 "import requests\n" +
                 "import base64\n" +
@@ -29,7 +30,7 @@ public class ExecutePython {
             String filePath = tempPyhtonFile.getAbsolutePath();
             System.out.println("FilePath : " + filePath);
             FileWriter fileWriter = new FileWriter(filePath);
-            fileWriter.write(new String(Base64Utils.decodeFromString(pythonScriptDto.getBody())));
+            fileWriter.write(new String(Base64Utils.decodeFromString(requestModel.getBody())));
             fileWriter.close();
             return executePython(filePath);
         } catch (Exception e) {
