@@ -21,6 +21,13 @@ public class SignupServiceImpl implements SignupService {
 
     @Override
     public UserDto createUser(UserDto userDetails) {
+
+        if(userRepository.findByEmail(userDetails.getEmail()) != null)
+        {
+            userDetails.setMessage("Email-id is already exist, please use different email-id");
+            return userDetails;
+        }
+
         userDetails.setUserId(UUID.randomUUID().toString());
         userDetails.setEncryptedPassword(bCryptPasswordEncoder.encode(userDetails.getPassword()));
         ModelMapper modelMapper = new ModelMapper();
@@ -28,7 +35,8 @@ public class SignupServiceImpl implements SignupService {
         UserEntity userEntity = modelMapper.map(userDetails, UserEntity.class);
 
         userRepository.save(userEntity);
-
-        return modelMapper.map(userEntity, UserDto.class);
+        UserDto dto = modelMapper.map(userEntity, UserDto.class);
+        dto.setMessage("User Successfully created");
+        return dto;
     }
 }

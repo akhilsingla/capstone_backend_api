@@ -29,7 +29,9 @@ public class CreateUserController {
 
         UserDto createdUser = signupService.createUser(userDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(modelMapper.map(createdUser, CreateUserResponseModel.class));
-
+        if(createdUser.getMessage().equals("User Successfully created"))
+            return ResponseEntity.status(HttpStatus.CREATED).body(modelMapper.map(createdUser, CreateUserResponseModel.class));
+        else
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(modelMapper.map(createdUser, CreateUserResponseModel.class));
     }
 }
