@@ -3,8 +3,10 @@ package com.iitr.gl.userdetailservice.ui.controller;
 import com.iitr.gl.userdetailservice.exception.UnauthorizedException;
 import com.iitr.gl.userdetailservice.service.AdminService;
 import com.iitr.gl.userdetailservice.service.PythonScriptService;
+import com.iitr.gl.userdetailservice.service.SignoutServiceImpl;
 import com.iitr.gl.userdetailservice.service.XRayService;
 import com.iitr.gl.userdetailservice.shared.AdminDashboardDto;
+import com.iitr.gl.userdetailservice.shared.ExpiredTokenDto;
 import com.iitr.gl.userdetailservice.shared.GenericDto;
 import com.iitr.gl.userdetailservice.shared.PythonScriptDto;
 import com.iitr.gl.userdetailservice.ui.model.*;
@@ -49,6 +51,9 @@ public class AdminController {
 
     @Autowired
     ExecutePython executePython;
+
+    @Autowired
+    SignoutServiceImpl signoutService;
 
     @PostMapping("/upgradeUserToAdmin")
     public String upgradeUserToAdmin(@RequestBody GenericRequestModel requestModel, @RequestHeader("Authorization") String token)
@@ -189,5 +194,15 @@ public class AdminController {
         getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
         return executePython.runPythonScript(requestModel);
 
+    }
+
+    @PostMapping("/signout")
+    public HttpStatus signOut(@RequestBody GenericRequestModel requestModel, @RequestHeader("Authorization") String token)
+    {
+        getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
+        ExpiredTokenDto expiredTokenDto = new ExpiredTokenDto();
+        expiredTokenDto.setUserId(requestModel.getAdminId());
+        expiredTokenDto.setToken(token);
+        return signoutService.signOut(expiredTokenDto);
     }
 }
