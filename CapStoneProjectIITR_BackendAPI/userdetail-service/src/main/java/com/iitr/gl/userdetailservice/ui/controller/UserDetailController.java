@@ -45,12 +45,13 @@ public class UserDetailController {
     }
 
     @PostMapping("/signout")
-    public HttpStatus signOut(@RequestBody GenericRequestModel requestModel, @RequestHeader("Authorization") String token)
+    public ResponseEntity<String> signOut(@RequestBody GenericRequestModel requestModel, @RequestHeader("Authorization") String token)
     {
         getJwtSubject.verifyIfAuthorized(token, requestModel.getUserId(), environment, false);
         ExpiredTokenDto expiredTokenDto = new ExpiredTokenDto();
         expiredTokenDto.setUserId(requestModel.getUserId());
         expiredTokenDto.setToken(token);
-        return signoutService.signOut(expiredTokenDto);
+        HttpStatus httpStatus = signoutService.signOut(expiredTokenDto);
+        return ResponseEntity.status(httpStatus).body("Signed out");
     }
 }

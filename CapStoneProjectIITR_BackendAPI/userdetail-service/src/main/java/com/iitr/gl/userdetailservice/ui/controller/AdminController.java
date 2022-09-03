@@ -197,12 +197,12 @@ public class AdminController {
     }
 
     @PostMapping("/signout")
-    public HttpStatus signOut(@RequestBody GenericRequestModel requestModel, @RequestHeader("Authorization") String token)
+    public ResponseEntity<String> signOut(@RequestBody GenericRequestModel requestModel, @RequestHeader("Authorization") String token)
     {
         getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
         ExpiredTokenDto expiredTokenDto = new ExpiredTokenDto();
         expiredTokenDto.setUserId(requestModel.getAdminId());
-        expiredTokenDto.setToken(token);
-        return signoutService.signOut(expiredTokenDto);
+        HttpStatus httpStatus = signoutService.signOut(expiredTokenDto);
+        return ResponseEntity.status(httpStatus).body("Signed out");
     }
 }
