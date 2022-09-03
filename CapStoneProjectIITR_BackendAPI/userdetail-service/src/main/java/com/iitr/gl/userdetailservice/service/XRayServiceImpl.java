@@ -166,7 +166,7 @@ public class XRayServiceImpl implements XRayService {
             if (!pneumoniaXrayIds.isEmpty())
                 pneumoniaXRayDocuments = pneumoniaXRayMongoDBRepository.findAllUsingXrayId(pneumoniaXrayIds);
             if (!tuberculosisXrayIds.isEmpty())
-                tuberculosisXRayDocuments = tuberculosisXRayMongoDBRepository.findAllUsingXrayId(pneumoniaXrayIds);
+                tuberculosisXRayDocuments = tuberculosisXRayMongoDBRepository.findAllUsingXrayId(tuberculosisXrayIds);
 
             ListUserFilesResponseModel listUserFilesResponseModel = new ListUserFilesResponseModel();
 
