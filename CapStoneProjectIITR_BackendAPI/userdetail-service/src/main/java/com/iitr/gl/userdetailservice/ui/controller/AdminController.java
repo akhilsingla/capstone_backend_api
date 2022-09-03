@@ -202,6 +202,7 @@ public class AdminController {
         getJwtSubject.verifyIfAuthorized(token, requestModel.getAdminId(), environment, true);
         ExpiredTokenDto expiredTokenDto = new ExpiredTokenDto();
         expiredTokenDto.setUserId(requestModel.getAdminId());
+        expiredTokenDto.setToken(token);
         HttpStatus httpStatus = signoutService.signOut(expiredTokenDto);
         return ResponseEntity.status(httpStatus).body("Signed out");
     }
